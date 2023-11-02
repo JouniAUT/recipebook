@@ -1,19 +1,35 @@
 package hh.sof03.recipebook.domain;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Category {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long categoryid;
 	private String name;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	@JsonIgnoreProperties("category")
+	private List<Recipe> recipes;
+	
 	public Category() {
 		super();
-		this.categoryid = null;
 		this.name = null;
 	}
 
-	public Category(Long categoryid, String name) {
+	public Category(String name) {
 		super();
-		this.categoryid = categoryid;
 		this.name = name;
 	}
 
@@ -31,6 +47,14 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
 	}
 
 	@Override

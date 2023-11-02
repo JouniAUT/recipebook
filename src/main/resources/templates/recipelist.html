@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+	<title>Recipe book</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+</head>
+<body>
+   <h1>List of all the recipes</h1>
+   
+   <div class="col-md-4">
+	   <h3>Welcome <span sec:authetication="name"></span></h3>
+   </div>
+   <div class="col-md-4">
+	   <form th:action="@{/logout}" method="post">
+		   <input type="submit" value="Sign out" class="btn btn-sm btn-danger"/>
+	   </form>
+   </div>
+  	<table class="table table-striped">
+		<tr>
+			<th>Name of the recipe</th>
+			<th>Level of difficulty</th>
+			<th>Duration of the recipe</th>
+			<th>Main ingredient of the dish</th>
+			<th>Category of the dish</th>
+			<th>Method</th>
+			<th sec:authorize="hasAuthority('ADMIN')"> </th>
+			<th sec:authorize="hasAuthority('ADMIN')"> </th>
+		</tr>
+		<tr th:each= "recipe : ${recipes}">
+			<td th:text="${recipe.name}"></td>
+			<td th:text="${recipe.level}"></td>
+			<td th:text="${recipe.duration} + ' minutes'"></td>
+			<td th:text="${recipe.mainIngredient!='null'?recipe.mainIngredient.name:''}"></td>
+			<td th:text="${recipe.category!='null'?recipe.category.name:''}"></td>
+			<td><a class="btn btn-success" th:href="@{/show/{id}(id=${recipe.recipeid})}">Show method</a></td>
+			<td sec:authorize= "hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{delete/{id}(id=${recipe.recipeid})}">Delete recipe</a></td>
+			<td sec:authorize= "hasAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{edit/{id}(id=${recipe.recipeid})}">Edit recipe</a></td>
+		</tr>  
+	 </table>
+	 <a class="btn btn-success" href="/categorylist">Show categories</a>
+	 <a class="btn btn-success" href="/mainingredientlist">Show main ingredient list</a>
+	 <a class="btn btn-success" href="/add">Add recipe</a>
+</body>
+</html>

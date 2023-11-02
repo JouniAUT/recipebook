@@ -1,28 +1,44 @@
 package hh.sof03.recipebook.domain;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class MainIngredient {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long ingredientid;
 	private String name;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "mainIngredient")
+	@JsonIgnoreProperties("mainIngredient")
+	private List<Recipe> recipes;
+	
 	public MainIngredient() {
 		super();
-		this.ingredientid = null;
 		this.name = null;
 	}
 
-	public MainIngredient(Long inredientid, String name) {
+	public MainIngredient(String name) {
 		super();
-		this.ingredientid = inredientid;
 		this.name = name;
 	}
 
-	public Long getInredientid() {
+	public Long getIngredientid() {
 		return ingredientid;
 	}
 
-	public void setInredientid(Long inredientid) {
-		this.ingredientid = inredientid;
+	public void setIngredientid(Long ingredientid) {
+		this.ingredientid = ingredientid;
 	}
 
 	public String getName() {
@@ -33,9 +49,17 @@ public class MainIngredient {
 		this.name = name;
 	}
 
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
 	@Override
 	public String toString() {
-		return "inredientid: " + ingredientid + ", name: " + name;
+		return "Ingredientid: " + ingredientid + ", name: " + name;
 	}
 	
 	

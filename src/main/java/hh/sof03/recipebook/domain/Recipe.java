@@ -1,9 +1,13 @@
 package hh.sof03.recipebook.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Recipe {
@@ -13,21 +17,37 @@ public class Recipe {
 	private Long recipeid;
 	private String name;
 	private String level;
-	private int minutes;
+	private int duration;
+	private String method;
+	
+	@ManyToOne
+	@JsonIgnoreProperties ("recipes")
+	@JoinColumn(name = "categoryid")
+	private Category category;
+	
+	@ManyToOne
+	@JsonIgnoreProperties ("recipes")
+	@JoinColumn(name = "ingredientid")
+	private MainIngredient mainIngredient;
 	
 	public Recipe() {
 		super();
-		this.recipeid = null;
 		this.name = null;
 		this.level = null;
-		this.minutes = 0;
+		this.duration = 0;
+		this.method = null;
+		this.category = null;
+		this.mainIngredient = null;
+				
 	}
-		public Recipe(Long recipeid, String name, String level, int minutes) {
+		public Recipe(String name, String level, int duration, String method, Category category, MainIngredient mainIngredient) {
 		super();
-		this.recipeid = recipeid;
 		this.name = name;
 		this.level = level;
-		this.minutes = minutes;
+		this.duration = duration;
+		this.method = method;
+		this.category = category;
+		this.mainIngredient = mainIngredient;
 	}
 	
 	public Long getRecipeid() {
@@ -48,16 +68,37 @@ public class Recipe {
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public int getMinutes() {
-		return minutes;
+	public int getDuration() {
+		return duration;
 	}
-	public void setMinutes(int minutes) {
-		this.minutes = minutes;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
-	
+	public String getMethod() {
+		return method;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	public MainIngredient getMainIngredient() {
+		return mainIngredient;
+	}
+	public void setMainIngredient(MainIngredient mainIngredient) {
+		this.mainIngredient = mainIngredient;
+	}
 	@Override
 	public String toString() {
-		return "recipeid: " + recipeid + ", name: " + name + ", level: " + level + ", minutes: " + minutes;
+		if(this.recipeid != null)
+		return "name: " + name + ", level: " + level + ", duration: " + duration + ", method: " + method + ", category: " + this.getCategory() + ", main ingredient: " + this.getMainIngredient();
+		
+		else
+			return "name: " + name + ", level: " + level + ", duration: " + duration + ", method: " + method;
 	}
 	
 }

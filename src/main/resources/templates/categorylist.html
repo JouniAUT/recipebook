@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Recipe book</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+   <h1>List of all the categories</h1>
+  	<table class="table table-striped">
+  		<tr>
+  			<th>Name</th>
+  		</tr>
+  		<tr th:each= "category: ${categories}">
+  			<td th:text= "${category.name}"></td>
+  		</tr>
+  	</table>
+  	<a class="btn btn-success" href="/addcat">Add category</a>
+  	<a class ="btn btn-primary" href="/recipelist">Back to the recipe list</a>
+</body>
+</html>

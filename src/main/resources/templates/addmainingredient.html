@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Recipe book</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+</head>
+<body>
+	<h1>Add new main ingredient to recipe book</h1>
+  		<div>
+  		<form th:object= "${mainIngredient}" th:action= "@{savemainingredient}" action= "#" method= "post">
+ 			<label for= "name">Name of the category: </label>
+ 			<input type= "text" id= "name" th:field= "*{name}"/> <br><br>
+  			<input type= submit class="btn btn-success" value= "Save"></input>
+  		</form>
+  	</div>
+  	<a class ="btn btn-primary" href="/recipelist">Back to the recipe list</a>
+</body>
+</html>
