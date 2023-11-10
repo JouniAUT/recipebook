@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Recipe {
@@ -15,10 +17,14 @@ public class Recipe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long recipeid;
+	@NotBlank(message = "It's easier to use recipe book, if recipes have names")
 	private String name;
+	@NotBlank(message = "Please, describe your recipe")
 	private String level;
+	@Min(value= 1, message = "Recipe has to be at least {1} minute long")
 	private int duration;
 	private String method;
+	
 	
 	@ManyToOne
 	@JsonIgnoreProperties ("recipes")

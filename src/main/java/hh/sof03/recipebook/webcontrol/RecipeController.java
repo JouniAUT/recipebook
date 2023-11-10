@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,9 @@ import hh.sof03.recipebook.domain.CategoryRepository;
 import hh.sof03.recipebook.domain.MainIngredientRepository;
 import hh.sof03.recipebook.domain.Recipe;
 import hh.sof03.recipebook.domain.RecipeRepository;
+import jakarta.validation.Valid;
+
+
 
 @Controller
 public class RecipeController {
@@ -40,9 +45,15 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveRecipe(Recipe recipe) {
+	public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors()) {
+		return "addrecipe";
+				
+		} else {
 		recipeRepository.save(recipe);
 		return "redirect:/recipelist";
+				}
+			
 	}
 	
 	@RequestMapping(value = "/show/{id}") //Näytä yhden reseptin ohjeistus

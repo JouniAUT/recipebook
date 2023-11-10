@@ -1,37 +1,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Back End Programming with Spring Boot</title>
+	<title>Recipe book</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
 </head>
 <body>
    <h1>Add a recipe to your recipe book</h1>
-  
-  		<div>
-			 <form th:object="${recipe}" th:action="@{save}" action="#" method="post">
-			 	<label for="name">Name of the recipe: </label>
-				<input type="text" id="name" th:field="*{name}"/> <br><br>
-				<label for="level">Difficulty of the recipe: </label>
-				<input type= "text" id="level" th:field="*{level}"/> <br><br>
-				<label for="minutes">Duration of the recipe: </label>
-				<input type= "text" id="duration" th:field="*{duration}"/> <br><br>
-				
-				<label for="categorylist">Category of the recipe: </label>
+		
+		<form th:object="${recipe}" th:action="@{save}" action="#" method="post" >
+			<table class="table table-striped">
+				<tr>
+					<td><b>Name: </b><input class="form-control" type="text" th:field="*{name}"/></td>
+					<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+				</tr>
+				<tr>
+					<td><b>Level: </b><input class="form-control" type="text" th:field="*{level}"/></td>
+					<td th:if="${#fields.hasErrors('level')}" th:errors="*{level}">Error</td>
+				</tr>
+				<tr>	
+					<td><b>Duration: </b><input class="form-control" type="text" th:field="*{duration}"/></td>
+					<td th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}">Error</td>
+				</tr>
+				<tr>
+					<td><label for="categorylist">Category of the recipe: </label>
 					<select id="categorylist" th:field="*{category}" class="form-control">
-						<option th:each="categ: ${categories}" th:value="${categ.categoryid}" th:text="${categ.name}"></option> 
-				 	</select> <br><br>
-				 
-				 <label for="ingredientlist">Main ingredient of the recipe: </label>
-				 	<select id="ingredientlist" th:field="*{mainIngredient}" class="form-control">
-						 <option th:each="ingre: ${ingredients}" th:value="${ingre.ingredientid}" th:text="${ingre.name}"></option>
-					 </select> <br><br>
-					 
-				<label for="method">Method for the recipe: </label>	 
-				<textarea id="method" th:field="*{method}" rows="10" cols="50"></textarea><br><br>
-			
-				<input type= submit class="btn btn-success" value="Save"></input>
-			 </form>
-		</div>
+						<option th:each="categ: ${categories}" th:value="${categ.categoryid}" th:text="${categ.name}"></option>
+					</select> 
+					</td>
+				</tr>
+				<tr> 
+					<td><label for="ingredientlist">Main ingredient of the recipe: </label>
+					<select id="ingredientlist" th:field="*{mainIngredient}" class="form-control">
+						<option th:each="ingre: ${ingredients}" th:value="${ingre.ingredientid}" th:text="${ingre.name}"></option>
+					</select>
+					</td>
+				</tr>
+				<tr>		 
+				<td><label for="method">Method for the recipe: </label> <br>
+				<textarea id="method" th:field="*{method}" rows="10" cols="50"></textarea></td>
+				</tr>
+			</table>
+			<input type= submit class="btn btn-success" value="Save"></input>
+		</form>
+		<br>
 		<a class ="btn btn-primary" href="/recipelist">Back to the list</a>
 </body>
 </html>
