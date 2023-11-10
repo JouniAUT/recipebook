@@ -47,13 +47,15 @@ public class RecipeController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveRecipe(@Valid @ModelAttribute("recipe") Recipe recipe, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-		return "addrecipe";
+			model.addAttribute("recipe", recipe);
+			model.addAttribute("categories", categoryRepository.findAll());
+			model.addAttribute("ingredients", mainIngredientRepository.findAll());
+			return "addrecipe";
 				
 		} else {
 		recipeRepository.save(recipe);
 		return "redirect:/recipelist";
-				}
-			
+		}	
 	}
 	
 	@RequestMapping(value = "/show/{id}") //Näytä yhden reseptin ohjeistus
