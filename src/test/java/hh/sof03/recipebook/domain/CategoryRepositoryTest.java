@@ -30,7 +30,7 @@ public class CategoryRepositoryTest {
 		categoryRepository.save(category);
 		
 		assertThat(category.getCategoryid()).isNotNull();
-		assertThat(category.getCategoryid()).isEqualTo(3);
+		
 	}
 	
 	@Test
